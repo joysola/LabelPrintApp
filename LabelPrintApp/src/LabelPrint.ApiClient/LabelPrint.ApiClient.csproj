@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <Import Project="..\..\lib\HttpClientEx\AspectInjector.2.4.2\build\netstandard2.0\AspectInjector.targets" Condition="Exists('..\..\lib\HttpClientEx\AspectInjector.2.4.2\build\netstandard2.0\AspectInjector.targets')" />
+  <ItemGroup>
+    <ProjectReference Include="..\LabelPrint.Domain\LabelPrint.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="AspectInjector.Broker">
+      <HintPath>..\..\lib\HttpClientEx\AspectInjector.2.4.2\lib\netstandard2.0\AspectInjector.Broker.dll</HintPath>
+    </Reference>
+    <Reference Include="HttpClientExtension">
+      <HintPath>..\..\lib\HttpClientEx\HttpClientExtension.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

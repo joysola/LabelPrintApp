@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabelPrint.App", "src\LabelPrint.App\LabelPrint.App.csproj", "{9684CD7B-9E16-4A38-BEFD-5FF2AE5E3A54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabelPrint.ViewModel", "src\LabelPrint.ViewModel\LabelPrint.ViewModel.csproj", "{5C1D1326-52DD-4B7F-877C-C29426869231}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabelPrint.ApiClient", "src\LabelPrint.ApiClient\LabelPrint.ApiClient.csproj", "{94486E03-DE2D-47CB-9936-27DF2824CB8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabelPrint.Common", "src\LabelPrint.Common\LabelPrint.Common.csproj", "{9B74435D-3704-4336-95E0-2C363A9D1253}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabelPrint.Domain", "src\LabelPrint.Domain\LabelPrint.Domain.csproj", "{83B9A544-B926-46BF-A6A1-963BA39F2406}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9684CD7B-9E16-4A38-BEFD-5FF2AE5E3A54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9684CD7B-9E16-4A38-BEFD-5FF2AE5E3A54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9684CD7B-9E16-4A38-BEFD-5FF2AE5E3A54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9684CD7B-9E16-4A38-BEFD-5FF2AE5E3A54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C1D1326-52DD-4B7F-877C-C29426869231}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C1D1326-52DD-4B7F-877C-C29426869231}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C1D1326-52DD-4B7F-877C-C29426869231}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C1D1326-52DD-4B7F-877C-C29426869231}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94486E03-DE2D-47CB-9936-27DF2824CB8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94486E03-DE2D-47CB-9936-27DF2824CB8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94486E03-DE2D-47CB-9936-27DF2824CB8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94486E03-DE2D-47CB-9936-27DF2824CB8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B74435D-3704-4336-95E0-2C363A9D1253}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B74435D-3704-4336-95E0-2C363A9D1253}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B74435D-3704-4336-95E0-2C363A9D1253}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B74435D-3704-4336-95E0-2C363A9D1253}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83B9A544-B926-46BF-A6A1-963BA39F2406}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83B9A544-B926-46BF-A6A1-963BA39F2406}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83B9A544-B926-46BF-A6A1-963BA39F2406}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83B9A544-B926-46BF-A6A1-963BA39F2406}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D34090C9-BF17-470C-B824-DC6935D92CFA}
+	EndGlobalSection
+EndGlobal

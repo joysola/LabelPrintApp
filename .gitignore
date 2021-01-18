@@ -348,3 +348,8 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/LabelPrintApp/lib/Windows DLL/TSCLIB/64bit/TSCLIB.lib
+/LabelPrintApp/lib/Windows DLL/TSCLIB/32bit/TSCLIB.lib
+/LabelPrintApp/lib/HttpClientEx/AspectInjector.2.4.2/tools
+/LabelPrintApp/lib/HttpClientEx/AspectInjector.2.4.2/analyzers/dotnet/cs
+/LabelPrintApp/lib/HttpClientEx/AspectInjector.2.4.2/build/_bin

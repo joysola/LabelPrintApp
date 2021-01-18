@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LabelPrint.ApiClient\LabelPrint.ApiClient.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="HttpClientExtension">
+      <HintPath>..\..\lib\HttpClientEx\HttpClientExtension.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

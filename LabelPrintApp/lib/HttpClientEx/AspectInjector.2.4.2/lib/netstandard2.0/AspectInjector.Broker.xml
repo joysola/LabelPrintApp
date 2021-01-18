@@ -1,0 +1,366 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AspectInjector.Broker</name>
+    </assembly>
+    <members>
+        <member name="T:AspectInjector.Broker.Advice">
+            <summary>
+            Defines method as a special advice method.
+            </summary>
+        </member>
+        <member name="M:AspectInjector.Broker.Advice.#ctor(AspectInjector.Broker.Kind)">
+            <summary>
+            Initializes a new instance of the <see cref="T:AspectInjector.Broker.Advice" /> class.
+            </summary>
+            <param name="kind">Specifies when advice method should be called.</param>
+        </member>
+        <member name="P:AspectInjector.Broker.Advice.Targets">
+            <summary>
+            Specifies what target members this method is injected to. <see cref="F:AspectInjector.Broker.Target.Any" /> by default.
+            </summary>
+        </member>
+        <member name="P:AspectInjector.Broker.Advice.Kind">
+            <summary>
+            Kind of advice
+            </summary>
+        </member>
+        <member name="T:AspectInjector.Broker.Argument">
+            <summary>
+            Defines method parameter as a special advice parameter.
+            </summary>
+        </member>
+        <member name="M:AspectInjector.Broker.Argument.#ctor(AspectInjector.Broker.Source)">
+            <summary>
+            Initializes a new instance of the <see cref="T:AspectInjector.Broker.Argument" /> class.
+            </summary>
+            <param name="source">Specifies source of advice argument.</param>
+        </member>
+        <member name="P:AspectInjector.Broker.Argument.Source">
+            <summary>
+            Advice argument source used to populate method parameter.
+            </summary>
+        </member>
+        <member name="T:AspectInjector.Broker.Aspect">
+            <summary>
+            Configures aspect usage scenarios.
+            </summary>
+        </member>
+        <member name="M:AspectInjector.Broker.Aspect.#ctor(AspectInjector.Broker.Scope)">
+            <summary>
+            Initializes a new instance of the <see cref="T:AspectInjector.Broker.Aspect" /> class.
+            </summary>
+            <param name="scope">Scope in which aspect is instantiated.</param>
+        </member>
+        <member name="P:AspectInjector.Broker.Aspect.Factory">
+            <summary>
+            Type that is used as aspect factory. Type should contain <code>public static object GetInstance(Type)</code> method. <code>null</code> represents original parameter-less constructor.
+            </summary>
+        </member>
+        <member name="P:AspectInjector.Broker.Aspect.Scope">
+            <summary>
+            Scope in which aspect is instantiated.
+            </summary>
+        </member>
+        <member name="T:AspectInjector.Broker.Injection">
+            <summary>
+            Marks attribute as an injection trigger.
+            </summary>
+        </member>
+        <member name="M:AspectInjector.Broker.Injection.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:AspectInjector.Broker.Injection" /> class.
+            </summary>
+            <param name="aspect">Aspect to inject.</param>
+        </member>
+        <member name="P:AspectInjector.Broker.Injection.Priority">
+            <summary>
+            Specifies priority for this cut. The higher priority the earlier execution.
+            </summary>
+        </member>
+        <member name="P:AspectInjector.Broker.Injection.Aspect">
+            <summary>
+            Aspect type that is being injected.
+            </summary>
+        </member>
+        <member name="P:AspectInjector.Broker.Injection.Propagation">
+            <summary>
+            Specifies propagation strategy. <see cref="F:AspectInjector.Broker.PropagateTo.Members" /> | <see cref="F:AspectInjector.Broker.PropagateTo.Types" /> by default.
+            </summary>
+        </member>
+        <member name="P:AspectInjector.Broker.Injection.PropagationFilter">
+            <summary>
+            Specifies subsequent members filter by name. The aspect will be applied to selected members as well. <code>null</code> means - all members.
+            </summary>
+        </member>
+        <member name="P:AspectInjector.Broker.Injection.Inherited">
+            <summary>
+            Gets or sets a System.Boolean value that determines whether the indicated injection is inherited by derived attribute classes.
+            </summary>
+        </member>
+        <member name="T:AspectInjector.Broker.Kind">
+            <summary>
+            Advice method injection points enumeration.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Kind.Before">
+            <summary>
+            Advice method is called before target method.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Kind.After">
+            <summary>
+            Advice method is called after target method.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Kind.Around">
+            <summary>
+            Advice method is called instead of target method. Consider using <see cref="F:AspectInjector.Broker.Source.Target" /> and <see cref="F:AspectInjector.Broker.Source.Arguments" /> in order to make a subsequent call to target method.
+            </summary>
+        </member>
+        <member name="T:AspectInjector.Broker.Mixin">
+            <summary>
+            Mixes in an interface implementation trough creating proxy methods.
+            </summary>
+        </member>
+        <member name="M:AspectInjector.Broker.Mixin.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:AspectInjector.Broker.Mixin" /> class.
+            </summary>
+            <param name="interface">Interface to implement.</param>
+        </member>
+        <member name="P:AspectInjector.Broker.Mixin.Interface">
+            <summary>
+            Interface injected into targets.
+            </summary>
+        </member>
+        <member name="T:AspectInjector.Broker.PropagateTo">
+            <summary>
+            Proparation targets enumeration
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.PropagateTo.None">
+            <summary>
+            Propagation is disabled
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.PropagateTo.Methods">
+            <summary>
+            Propagate to methods
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.PropagateTo.Properties">
+            <summary>
+            Propagate to properties
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.PropagateTo.Events">
+            <summary>
+            Propagate to events
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.PropagateTo.Members">
+            <summary>
+            Propagate to all members
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.PropagateTo.Types">
+            <summary>
+            Propagate to nested types. Causes recursive injection.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.PropagateTo.IncludeCompilerGenerated">
+            <summary>
+            Allows propagation to compiler generated members and types. Effectively allows propagation to lambdas and iterators. May affect performance. Use with caution!
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.PropagateTo.Everything">
+            <summary>
+            Propagate to everything. Could cause performance hit!
+            </summary>
+        </member>
+        <member name="T:AspectInjector.Broker.Scope">
+            <summary>
+            Advice creation scope enumeration.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Scope.Global">
+            <summary>
+            Aspect is created and used as singleton. Default value.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Scope.PerInstance">
+            <summary>
+            Instance of an aspect is created per target class instance.
+            </summary>
+        </member>
+        <member name="T:AspectInjector.Broker.Source">
+            <summary>
+            Advice argument sources enumeration.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Source.Instance">
+            <summary>
+            Target's instance or <c>null</c> if target is static.
+            Should be of type <see cref="T:System.Object" />.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Source.Type">
+            <summary>
+            Target's owner. Usualy class or struct type.
+            Should be of type <see cref="T:System.Type" />.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Source.Method">
+            <summary>
+            Target method.-
+            Should be of type <see cref="T:System.Reflection.MethodBase" />.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Source.Metadata">
+            <summary>
+            Target method metadata.
+            Should be of type <see cref="T:System.Reflection.MethodBase" />.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Source.Target">
+            <summary>
+            Target method delegate. Usage <example>Target(<see cref="F:AspectInjector.Broker.Source.Arguments"/>)</example> for chaining methods.
+            Should be of type <see cref="T:Func{object[],object}" />.
+            Works only with <see cref="F:AspectInjector.Broker.Kind.Around" />.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Source.Name">
+            <summary>
+            Target name.
+            Should be of type <see cref="T:System.String" />.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Source.Arguments">
+            <summary>
+            Target method arguments.
+            Should be of type <see cref="T:System.Object"/>[].
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Source.ReturnValue">
+            <summary>
+            Target method result.
+            Should be of type <see cref="T:System.Object" />.
+            Works only with <see cref="F:AspectInjector.Broker.Kind.After" />.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Source.ReturnType">
+            <summary>
+            Target method result type.
+            Should be of type <see cref="T:System.Type" />.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Source.Injections">
+            <summary>
+            Set of injections that trigger this advice./>.
+            Should be of type <see cref="T:System.Attribute" />[].
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Source.Triggers">
+            <summary>
+            Set of injections that trigger this advice./>.
+            Should be of type <see cref="T:System.Attribute" />[].
+            </summary>
+        </member>
+        <member name="T:AspectInjector.Broker.Target">
+            <summary>
+            Advice method injection targets enumeration.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Target.Private">
+            <summary>
+            Private members.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Target.Internal">
+            <summary>
+            Internal members.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Target.Protected">
+            <summary>
+            Protected members.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Target.ProtectedInternal">
+            <summary>
+            Protected internal members (Protected OR Internal).
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Target.ProtectedPrivate">
+            <summary>
+            Protected AND internal members.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Target.Public">
+            <summary>
+            Public members.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Target.AnyAccess">
+            <summary>
+            Members of any access.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Target.Static">
+            <summary>
+            Static members.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Target.Instance">
+            <summary>
+            Non static members.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Target.AnyScope">
+            <summary>
+            Members of any scope.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Target.Constructor">
+            <summary>
+            Advice method is injected into target's constructors.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Target.Method">
+            <summary>
+            Advice method is injected into target's methods.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Target.Getter">
+            <summary>
+            Advice method is injected into target's property getters.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Target.Setter">
+            <summary>
+            Advice method is injected into target's property setters.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Target.EventAdd">
+            <summary>
+            Advice method is injected into target's event subscribe handlers.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Target.EventRemove">
+            <summary>
+            Advice method is injected into target's event unsubscribe handlers.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Target.AnyMember">
+            <summary>
+            Advice method is injected into any target's member.
+            </summary>
+        </member>
+        <member name="F:AspectInjector.Broker.Target.Any">
+            <summary>
+            All members.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -26,5 +26,13 @@ namespace LabelPrint.App
             InitializeComponent();
             this.DataContext = new MainWindowVM();
         }
+
+
+        private void BtnSet_Click(object sender, RoutedEventArgs e)
+        {
+            SettingWin settingWin = new SettingWin();
+            settingWin.Owner = this;
+            var dialogRes = settingWin.ShowDialog();
+        }
     }
 }

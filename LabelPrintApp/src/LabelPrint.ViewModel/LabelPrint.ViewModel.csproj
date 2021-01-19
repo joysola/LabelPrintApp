@@ -1,14 +1,31 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LabelPrint.ApiClient\LabelPrint.ApiClient.csproj" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LabelPrint.ApiClient\LabelPrint.ApiClient.csproj" />
+    <ProjectReference Include="..\LabelPrint.Common\LabelPrint.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DST.Controls">
+      <HintPath>..\..\lib\Controls\DST.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight">
+      <HintPath>..\..\lib\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras">
+      <HintPath>..\..\..\..\..\..\Test\UpdateAssembly\UpdateAssembly\Lib\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform">
+      <HintPath>..\..\..\..\..\..\Test\UpdateAssembly\UpdateAssembly\Lib\GalaSoft.MvvmLight.Platform.dll</HintPath>
+    </Reference>
     <Reference Include="HttpClientExtension">
       <HintPath>..\..\lib\HttpClientEx\HttpClientExtension.dll</HintPath>
     </Reference>

@@ -4,9 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LabelPrint.App"
+        xmlns:vm="clr-namespace:LabelPrint.ViewModel;assembly=LabelPrint.ViewModel"
+        WindowStartupLocation="CenterScreen"
+        d:DataContext="{d:DesignInstance Type=vm:MainWindowVM}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="扫码" Height="450" Width="800">
     <Grid>
-
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button Grid.Row="0" Width="100" Height="30" Click="BtnSet_Click">配置</Button>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center">
+            <TextBox x:Name="codetxt" Width="350" Height="50" VerticalContentAlignment="Center"></TextBox>
+            <Button Command="{Binding PrintCommand}" Width="100" Height="30" Margin="0,10,0,10">打印</Button>
+        </StackPanel>
+        </Grid>
     </Grid>
 </Window>

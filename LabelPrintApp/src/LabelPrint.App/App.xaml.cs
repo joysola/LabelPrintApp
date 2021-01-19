@@ -25,7 +25,7 @@ namespace LabelPrint.App
     {
         public App()
         {
-            
+
         }
 
         private void InitApiClient()
@@ -62,6 +62,22 @@ namespace LabelPrint.App
             DispatcherHelper.Initialize();
             this.Register();
             this.InitApiClient();
+            this.InitExtendAppContext();
+        }
+        /// <summary>
+        /// 初始化全局属性
+        /// </summary>
+        private void InitExtendAppContext()
+        {
+            var settingStr = ConfigurationManager.AppSettings["BarCodeSetting"];
+            if (!string.IsNullOrEmpty(settingStr))
+            {
+                ExtendAppContext.Current.AppSettingModel = AppsettingSerializer.Deserialize<SettingModel>(settingStr);
+            }
+            else
+            {
+                ExtendAppContext.Current.AppSettingModel = new SettingModel();
+            }
         }
 
         private void Register()

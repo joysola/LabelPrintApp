@@ -1,0 +1,74 @@
+﻿<Window x:Class="LabelPrint.App.SettingWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LabelPrint.App"
+        xmlns:vm="clr-namespace:LabelPrint.ViewModel;assembly=LabelPrint.ViewModel"
+        xmlns:sys="clr-namespace:System;assembly=System.Core"
+        WindowStartupLocation="CenterOwner"
+        d:DataContext="{d:DesignInstance Type=vm:SettingVM}"
+        mc:Ignorable="d"
+        Title="配置" Height="470" Width="400">
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="StackPanel" x:Key="stpMargin">
+                <Setter Property="Margin" Value="10,0,10,10"></Setter>
+                <Setter Property="Orientation" Value="Horizontal"></Setter>
+            </Style>
+        </Grid.Resources>
+        <StackPanel VerticalAlignment="Top">
+            <TextBlock Margin="5,10,10,10">配置参数</TextBlock>
+            <StackPanel Style="{StaticResource stpMargin}">
+                <TextBlock Width="100" >Code:</TextBlock>
+                <TextBox Text="{Binding SettingModel.Code}"   Width="200" VerticalContentAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Style="{StaticResource stpMargin}">
+                <TextBlock Width="100" >X:</TextBlock>
+                <TextBox Text="{Binding SettingModel.X}"   Width="200" VerticalContentAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Style="{StaticResource stpMargin}">
+                <TextBlock Width="100" >Y:</TextBlock>
+                <TextBox Text="{Binding SettingModel.Y}"   Width="200" VerticalContentAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource stpMargin}">
+                <TextBlock Width="100" >CodeType:</TextBlock>
+                <TextBox Text="{Binding SettingModel.CodeType}"   Width="200" VerticalContentAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource stpMargin}">
+                <TextBlock Width="100" >Height:</TextBlock>
+                <TextBox Text="{Binding SettingModel.Height}"   Width="200" VerticalContentAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource stpMargin}">
+                <TextBlock Width="100" >HumanReadable:</TextBlock>
+                <TextBox Text="{Binding SettingModel.HumanReadable}"   Width="200" VerticalContentAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource stpMargin}">
+                <TextBlock Width="100" >Rotation:</TextBlock>
+                <TextBox Text="{Binding SettingModel.Rotation}"   Width="200" VerticalContentAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource stpMargin}">
+                <TextBlock Width="100" >Narrow:</TextBlock>
+                <TextBox Text="{Binding SettingModel.Narrow}"   Width="200" VerticalContentAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource stpMargin}">
+                <TextBlock Width="100" >Width:</TextBlock>
+                <TextBox Text="{Binding SettingModel.Width}"   Width="200" VerticalContentAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource stpMargin}">
+                <TextBlock Width="100" >Alignment:</TextBlock>
+                <TextBox Text="{Binding SettingModel.Alignment}"   Width="200" VerticalContentAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource stpMargin}">
+                <TextBlock Width="100" >Content:</TextBlock>
+                <TextBox Text="{Binding SettingModel.Content}" Height="70" Width="200" TextWrapping="Wrap" AcceptsReturn="True"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource stpMargin}" HorizontalAlignment="Center">
+                <Button Height="30" Width="80" Command="{Binding SaveCommand}">确定</Button>
+                <Button Height="30" Width="80" Margin="10,0,10,0" Click="BtnCancel_Click">取消</Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

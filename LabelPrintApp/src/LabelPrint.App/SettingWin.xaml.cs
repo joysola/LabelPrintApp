@@ -33,7 +33,6 @@ namespace LabelPrint.App
         {
             Messenger.Default.Register<bool>(this,MessengerKeyEnum.CloseWin, data =>
             {
-                this.DialogResult = data;
                 this.Close();
             });
         }

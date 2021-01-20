@@ -13,7 +13,9 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
+using Expression = System.Linq.Expressions.Expression;
 
 namespace LabelPrint.ViewModel
 {
@@ -23,7 +25,7 @@ namespace LabelPrint.ViewModel
         private SettingModel _settingModel = ExtendAppContext.Current.AppSettingModel;
         private static readonly string appsettingStr = "BarCodeSetting";
         private Lazy<Func<string, SettingModel, dynamic>> _getPropFunc = new Lazy<Func<string, SettingModel, dynamic>>(() =>
-         {
+        {
              var param_propName = Expression.Parameter(typeof(string), "propName");
              var param_model = Expression.Parameter(typeof(SettingModel), "model");
              var parm_prop = Expression.Parameter(typeof(PropertyInfo), "prop");
@@ -54,6 +56,10 @@ namespace LabelPrint.ViewModel
         /// 保存配置
         /// </summary>
         public ICommand SaveCommand { get; set; }
+        /// <summary>
+        /// 重置
+        /// </summary>
+        public ICommand ResetCommand { get; set; }
 
         public SettingVM()
         {
@@ -63,18 +69,25 @@ namespace LabelPrint.ViewModel
 
         private void RegisterCommand()
         {
+            // 保存
             this.SaveCommand = new RelayCommand(() =>
             {
                 ExtendAppContext.Current.AppSettingModel = SettingModel;
                 var settingStr = AppsettingSerializer.Serialize(SettingModel); // 配置字符串
-
-                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                config.AppSettings.Settings.Remove(appsettingStr);
-                config.AppSettings.Settings.Add(appsettingStr, settingStr); // 新增此节点
-                config.Save(ConfigurationSaveMode.Modified); // 保存
-                ConfigurationManager.RefreshSection("appSettings"); // 刷新配置
+                ConfigHelper.SaveAppsetting(appsettingStr, settingStr);
 
                 Messenger.Default.Send(true, MessengerKeyEnum.CloseWin); // 关闭窗口
+            });
+            // 重置
+            this.ResetCommand = new RelayCommand(() =>
+            {
+                var dialogRes = MessageBox.Show("是否需要配置初始化？", "提示", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                if (dialogRes == MessageBoxResult.OK)
+                {
+                    SettingModel = new SettingModel();
+                    var settingStr = AppsettingSerializer.Serialize(SettingModel); // 配置字符串
+                    ConfigHelper.SaveAppsetting(appsettingStr, settingStr);
+                }
             });
         }
         private bool CheckData()

@@ -21,7 +21,7 @@
             <TextBlock Margin="5,10,10,10">配置参数</TextBlock>
             <StackPanel Style="{StaticResource stpMargin}">
                 <TextBlock Width="100" >Code:</TextBlock>
-                <TextBox Text="{Binding SettingModel.Code}"   Width="200" VerticalContentAlignment="Center"/>
+                <TextBox Text="{Binding SettingModel.Code}"   Width="200" VerticalContentAlignment="Center" IsEnabled="False"/>
             </StackPanel>
 
             <StackPanel Style="{StaticResource stpMargin}">
@@ -61,13 +61,14 @@
                 <TextBlock Width="100" >Alignment:</TextBlock>
                 <TextBox Text="{Binding SettingModel.Alignment}"   Width="200" VerticalContentAlignment="Center"/>
             </StackPanel>
-            <StackPanel Style="{StaticResource stpMargin}">
+            <!--<StackPanel Style="{StaticResource stpMargin}">
                 <TextBlock Width="100" >Content:</TextBlock>
                 <TextBox Text="{Binding SettingModel.Content}" Height="70" Width="200" TextWrapping="Wrap" AcceptsReturn="True"/>
-            </StackPanel>
+            </StackPanel>-->
             <StackPanel Style="{StaticResource stpMargin}" HorizontalAlignment="Center">
                 <Button Height="30" Width="80" Command="{Binding SaveCommand}">确定</Button>
                 <Button Height="30" Width="80" Margin="10,0,10,0" Click="BtnCancel_Click">取消</Button>
+                <Button Height="30" Width="80" Margin="0,0,10,0" Command="{Binding ResetCommand}">初始化</Button>
             </StackPanel>
         </StackPanel>
     </Grid>

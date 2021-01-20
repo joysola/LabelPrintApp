@@ -13,7 +13,7 @@ namespace LabelPrint.Domain
         /// <summary>
         /// 患者年龄
         /// </summary>
-        public int age { get; set; }
+        public int? age { get; set; }
         /// <summary>
         /// 医院名称
         /// </summary>

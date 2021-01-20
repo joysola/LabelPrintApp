@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\a4z28-xygp9-002.ico" />
+    <None Remove="images\DSTlogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
   </ItemGroup>
 
@@ -43,6 +49,11 @@
     <Reference Include="System.Windows.Interactivity">
       <HintPath>..\..\lib\System.Windows.Interactivity.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\a4z28-xygp9-002.ico" />
+    <Resource Include="images\DSTlogo.png" />
   </ItemGroup>
 
   <ItemGroup>

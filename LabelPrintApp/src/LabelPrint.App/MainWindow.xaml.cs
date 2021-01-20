@@ -25,14 +25,23 @@ namespace LabelPrint.App
         {
             InitializeComponent();
             this.DataContext = new MainWindowVM();
+            this.Loaded += (sender, e) =>
+            {
+                this.codetxt.Focus();
+            };
         }
 
-
+        /// <summary>
+        /// 设置按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnSet_Click(object sender, RoutedEventArgs e)
         {
             SettingWin settingWin = new SettingWin();
             settingWin.Owner = this;
-            var dialogRes = settingWin.ShowDialog();
+            settingWin.ShowDialog();
         }
+
     }
 }

@@ -13,7 +13,7 @@ namespace LabelPrint.Common
         /// </summary>
         private const string dllName = "TSCLIB.dll";
         /// <summary>
-        /// 是加载指定的dll文件
+        /// 加载指定的dll文件
         /// </summary>
         /// <param name="dllToLoad">dll文件的路径</param>
         /// <returns>返回的为该dll的实例(指针)</returns>
@@ -26,14 +26,14 @@ namespace LabelPrint.Common
         {
             var path = new Uri(typeof(TSCLibApi).Assembly.CodeBase).LocalPath; // 当前程序集路径
             var folder = Path.GetDirectoryName(path); // 程序集文件夹
-            var subfolder = Environment.Is64BitProcess ? "64bit" : @"32bit"; // 选择64或32位dll文件夹
+            var subfolder = Environment.Is64BitProcess ? "64bit" : "32bit"; // 选择64或32位dll文件夹
             LoadLibrary($@"{folder}\TSCDLL\{subfolder}\{dllName}");
         }
         /// <summary>
         /// 顯示 DLL 版本號碼
         /// </summary>
-        [DllImport(dllName)]
-        public static extern int about();
+        [DllImport(dllName, EntryPoint = "about")]
+        public static extern int About();
         /// <summary>
         /// 指定電腦端的輸出埠
         /// </summary>
@@ -44,21 +44,21 @@ namespace LabelPrint.Common
         ///  (4) 直接指定 USB 傳輸介面，請指定輸出埠名稱為 USB
         ///  </param>
         /// <returns></returns>
-        [DllImport(dllName)]
-        public static extern int openport(string pirnterName);
+        [DllImport(dllName, EntryPoint = "openport")]
+        public static extern int OpenPort(string pirnterName);
         /// <summary>
         /// 關閉指定的電腦端輸出埠
         /// </summary>
         /// <returns></returns>
-        [DllImport(dllName)]
-        public static extern int closeport();
+        [DllImport(dllName, EntryPoint = "closeport")]
+        public static extern int ClosePort();
         /// <summary>
         /// 送內建指令到條碼印表機
         /// </summary>
         /// <param name="printerCommand">詳細指令請參考 TSPL</param>
         /// <returns></returns>
-        [DllImport(dllName)]
-        public static extern int sendcommand(string printerCommand);
+        [DllImport(dllName, EntryPoint = "sendcommand")]
+        public static extern int SendCommand(string printerCommand);
         /// <summary>
         /// 設定標籤的寬度、高度、列印速度、列印濃度、感應器類別、 gap/black mark 垂直間距、 gap/black mark 偏移距離
         /// </summary>
@@ -82,16 +82,16 @@ namespace LabelPrint.Common
         /// <param name="vertical">字串型別，設定 gap/black mark 垂直間距高度，單位: mm</param>
         /// <param name="offset">字串型別，設定 gap/black mark 偏移距離，單位: mm，此參數若使用一般標籤時均設為 0</param>
         /// <returns></returns>
-        [DllImport(dllName)]
-        public static extern int setup(string width, string height, string speed, string density, string sensor, string vertical, string offset);
+        [DllImport(dllName, EntryPoint = "setup")]
+        public static extern int Setup(string width, string height, string speed, string density, string sensor, string vertical, string offset);
         /// <summary>
         /// 下載單色 PCX 格式圖檔至印表機
         /// </summary>
         /// <param name="filename">字串型別，檔案名(可包含路徑)</param>
         /// <param name="image_name">字串型別，下載至印表機記憶體內之檔名(請使用大寫檔名)</param>
         /// <returns></returns>
-        [DllImport(dllName)]
-        public static extern int downloadpcx(string filename, string image_name);
+        [DllImport(dllName, EntryPoint = "downloadpcx")]
+        public static extern int Downloadpcx(string filename, string image_name);
         /// <summary>
         /// 使用條碼機內建條碼列印
         /// </summary>
@@ -135,8 +135,8 @@ namespace LabelPrint.Common
         /// <param name="wide">字串型別，設定條碼窄 bar 比例因子，請參考 TSPL 使用手冊</param>
         /// <param name="code">字串型別，條碼內容</param>
         /// <returns></returns>
-        [DllImport(dllName)]
-        public static extern int barcode(string x, string y, string type, string height, string readable, string rotation, string narrow, string wide, string code);
+        [DllImport(dllName, EntryPoint = "barcode")]
+        public static extern int Barcode(string x, string y, string type, string height, string readable, string rotation, string narrow, string wide, string code);
         /// <summary>
         /// 使用條碼機內建文字列印
         /// </summary>
@@ -165,34 +165,34 @@ namespace LabelPrint.Common
         /// <param name="ymul">字串型別，設定文字 X 方向放大倍率， 1~8</param>
         /// <param name="text">字串型別，列印文字內容</param>
         /// <returns></returns>
-        [DllImport(dllName)]
-        public static extern int printerfont(string x, string y, string fonttype, string rotation, string xmul, string ymul, string text);
+        [DllImport(dllName, EntryPoint = "printerfont")]
+        public static extern int PrinterFont(string x, string y, string fonttype, string rotation, string xmul, string ymul, string text);
         /// <summary>
         /// 清除
         /// </summary>
         /// <returns></returns>
-        [DllImport(dllName)]
-        public static extern int clearbuffer();
+        [DllImport(dllName, EntryPoint = "clearbuffer")]
+        public static extern int ClearBuffer();
         /// <summary>
         /// 列印標籤內容
         /// </summary>
         /// <param name="set">字串型別，設定列印標籤式數(set)</param>
         /// <param name="copy">字串型別，設定列印標籤份數(copy)</param>
         /// <returns></returns>
-        [DllImport(dllName)]
-        public static extern int printlabel(string set, string copy);
+        [DllImport(dllName, EntryPoint = "printlabel")]
+        public static extern int PrintLabel(string set, string copy);
         /// <summary>
         /// 跳頁，該函式需在 setup 後使用
         /// </summary>
         /// <returns></returns>
-        [DllImport(dllName)]
-        public static extern int formfeed();
+        [DllImport(dllName, EntryPoint = "formfeed")]
+        public static extern int FormFeed();
         /// <summary>
         /// 設定紙張不回吐
         /// </summary>
         /// <returns></returns>
-        [DllImport(dllName)]
-        public static extern int nobackfeed();
+        [DllImport(dllName, EntryPoint = "nobackfeed")]
+        public static extern int NoBackfeed();
         /// <summary>
         /// 使用 Windows TTF 字型列印文字
         /// </summary>
@@ -218,8 +218,8 @@ namespace LabelPrint.Common
         /// <param name="szFaceName">字串型別，字體名稱。如: Arial, Times new Roman, 細名體, 標楷體</param>
         /// <param name="content">字串型別，列印文字內容。</param>
         /// <returns></returns>
-        [DllImport(dllName)]
-        public static extern int windowsfont(int x, int y, int fontheight, int rotation, int fontstyle, int fontunderline, string szFaceName, string content);
+        [DllImport(dllName, EntryPoint = "windowsfont")]
+        public static extern int WindowsFont(int x, int y, int fontheight, int rotation, int fontstyle, int fontunderline, string szFaceName, string content);
 
     }
 }

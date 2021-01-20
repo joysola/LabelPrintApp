@@ -3,8 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:LabelPrint.App"
         xmlns:vm="clr-namespace:LabelPrint.ViewModel;assembly=LabelPrint.ViewModel"
+        Icon="images/a4z28-xygp9-002.ico"
+        ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance Type=vm:MainWindowVM}"
         mc:Ignorable="d"
@@ -13,16 +16,45 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="4*"/>
+                <RowDefinition Height="2*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Button Grid.Row="0" Width="100" Height="30" Click="BtnSet_Click">配置</Button>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center">
-            <TextBox x:Name="codetxt" Width="350" Height="50" VerticalContentAlignment="Center"></TextBox>
-            <Button Command="{Binding PrintCommand}" Width="100" Height="30" Margin="0,10,0,10">打印</Button>
-        </StackPanel>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <!--<Image Source="images/DSTlogo.png" Stretch="Uniform"  Width="50" Height="50"/>-->
+                <Button Grid.Row="0" Width="70" Height="30" Margin="10,0,0,0" Click="BtnSet_Click">配置</Button>
+                <Button Grid.Row="0" Width="70" Height="30" Margin="10,0,0,0" Command="{Binding TSCVerCommand}">TSC版本</Button>
+            </StackPanel>
+            <Grid Grid.Row="1" >
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold">条码号：</TextBlock>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="bartxt" Width="350" Height="50" 
+                         VerticalContentAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold"
+                         Margin="10,0,0,0" Text="{Binding Barcode}" IsEnabled="False"/>
+
+
+                <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold">样本号：</TextBlock>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="codetxt" Width="350" Height="50" 
+                         VerticalContentAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold"
+                         Margin="10,0,0,0" Text="{Binding Samplecode}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewKeyUp"><!--TextChanged-->
+                            <i:CallMethodAction TargetObject="{Binding}" MethodName="SampleCode_PreviewKeyUp"/>
+                            <!--<i:InvokeCommandAction  Command="{Binding CodeChangedCommand}" CommandParameter="{Binding ElementName=codetxt, Path=Text}"/>-->
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+
+                <Button Grid.Row="2" Grid.ColumnSpan="2" Command="{Binding PrintCommand}" Width="100" Height="30" Margin="0,20,0,10">打印</Button>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

@@ -3,17 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabelPrint.App", "src\LabelPrint.App\LabelPrint.App.csproj", "{9684CD7B-9E16-4A38-BEFD-5FF2AE5E3A54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabelPrint.App", "src\LabelPrint.App\LabelPrint.App.csproj", "{9684CD7B-9E16-4A38-BEFD-5FF2AE5E3A54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabelPrint.ViewModel", "src\LabelPrint.ViewModel\LabelPrint.ViewModel.csproj", "{5C1D1326-52DD-4B7F-877C-C29426869231}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabelPrint.ViewModel", "src\LabelPrint.ViewModel\LabelPrint.ViewModel.csproj", "{5C1D1326-52DD-4B7F-877C-C29426869231}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabelPrint.ApiClient", "src\LabelPrint.ApiClient\LabelPrint.ApiClient.csproj", "{94486E03-DE2D-47CB-9936-27DF2824CB8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabelPrint.Common", "src\LabelPrint.Common\LabelPrint.Common.csproj", "{9B74435D-3704-4336-95E0-2C363A9D1253}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabelPrint.Common", "src\LabelPrint.Common\LabelPrint.Common.csproj", "{9B74435D-3704-4336-95E0-2C363A9D1253}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabelPrint.Domain", "src\LabelPrint.Domain\LabelPrint.Domain.csproj", "{83B9A544-B926-46BF-A6A1-963BA39F2406}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LabelPrint.Domain", "src\LabelPrint.Domain\LabelPrint.Domain.csproj", "{83B9A544-B926-46BF-A6A1-963BA39F2406}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabelPrint.HandyControls", "src\LabelPrint.HandyControls\LabelPrint.HandyControls.csproj", "{D7D0CD33-5BE3-48F9-96D4-AD7A13308C95}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HandyControl_Shared", "src\HandyControl_Shared\HandyControl_Shared.shproj", "{AAC11083-FACA-405D-9197-5C1212D65656}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\HandyControl_Shared\HandyControl_Shared.projitems*{aac11083-faca-405d-9197-5c1212d65656}*SharedItemsImports = 13
+		src\HandyControl_Shared\HandyControl_Shared.projitems*{d7d0cd33-5be3-48f9-96d4-ad7a13308c95}*SharedItemsImports = 5
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -39,6 +47,10 @@ Global
 		{83B9A544-B926-46BF-A6A1-963BA39F2406}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83B9A544-B926-46BF-A6A1-963BA39F2406}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83B9A544-B926-46BF-A6A1-963BA39F2406}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7D0CD33-5BE3-48F9-96D4-AD7A13308C95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7D0CD33-5BE3-48F9-96D4-AD7A13308C95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7D0CD33-5BE3-48F9-96D4-AD7A13308C95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7D0CD33-5BE3-48F9-96D4-AD7A13308C95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

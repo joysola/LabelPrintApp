@@ -1,7 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
+    <LangVersion>8.0</LangVersion>
+    <UseWPF>true</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,7 +31,7 @@
     <Reference Include="HttpClientExtension">
       <HintPath>..\..\lib\HttpClientEx\HttpClientExtension.dll</HintPath>
     </Reference>
-    <Reference Include="PresentationCore">
+    <!--<Reference Include="PresentationCore">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\PresentationCore.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework">
@@ -37,7 +39,7 @@
     </Reference>
     <Reference Include="WindowsBase">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\WindowsBase.dll</HintPath>
-    </Reference>
+    </Reference>-->
   </ItemGroup>
 
 </Project>

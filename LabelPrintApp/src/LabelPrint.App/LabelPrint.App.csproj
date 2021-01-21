@@ -7,10 +7,14 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
   <ItemGroup>
-    <None Remove="images\a4z28-xygp9-002.ico" />
-    <None Remove="images\DSTlogo.png" />
-    <None Remove="images\setting_ico.gif" />
+    <None Remove="pictures\a4z28-xygp9-002.ico" />
+    <None Remove="pictures\DSTlogo.png" />
+    <None Remove="pictures\setting_ico.gif" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LabelPrint.Common\LabelPrint.Common.csproj" />
+    <ProjectReference Include="..\LabelPrint.HandyControls\LabelPrint.HandyControls.csproj" />
     <ProjectReference Include="..\LabelPrint.ViewModel\LabelPrint.ViewModel.csproj" />
   </ItemGroup>
 
@@ -54,9 +59,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="images\a4z28-xygp9-002.ico" />
-    <Resource Include="images\DSTlogo.png" />
-    <Resource Include="images\setting_ico.gif" />
+    <Resource Include="pictures\a4z28-xygp9-002.ico" />
+    <Resource Include="pictures\DSTlogo.png" />
+    <Resource Include="pictures\setting_ico.gif" />
   </ItemGroup>
 
   <ItemGroup>

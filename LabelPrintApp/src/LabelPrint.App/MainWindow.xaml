@@ -7,7 +7,8 @@
         xmlns:local="clr-namespace:LabelPrint.App"
         xmlns:cv="clr-namespace:LabelPrint.App.Converters"
         xmlns:vm="clr-namespace:LabelPrint.ViewModel;assembly=LabelPrint.ViewModel"
-        Icon="images/a4z28-xygp9-002.ico"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
+        Icon="pictures/a4z28-xygp9-002.ico"
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance Type=vm:MainWindowVM}"
@@ -26,8 +27,8 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
                 <!--<Image Source="images/DSTlogo.png" Stretch="Uniform"  Width="50" Height="50"/>-->
-                <Button Grid.Row="0" Width="70" Height="30" Margin="10,0,0,0" Click="BtnSet_Click" Content="TSC配置"></Button>
-                <Button Grid.Row="0" Width="70" Height="30" Margin="10,0,0,0" Command="{Binding TSCVerCommand}" Content="TSC版本"></Button>
+                <Button Grid.Row="0" Style="{StaticResource ButtonPrimary}" Width="70" Height="30" Margin="10,0,0,0" Click="BtnSet_Click" Content="TSC配置"></Button>
+                <Button Grid.Row="0" Style="{StaticResource ButtonInfo}" Width="70" Height="30" Margin="10,0,0,0" Command="{Binding TSCVerCommand}" Content="TSC版本"></Button>
                 <StackPanel Orientation="Horizontal" Margin="30,0,0,0" >
                     <TextBlock VerticalAlignment="Center" Text="打印模式："></TextBlock>
                     <RadioButton GroupName="model" Content="单打" VerticalContentAlignment="Center" IsChecked="{Binding PrintModel, Converter={StaticResource PrintModel2IsCheckedConverter}, ConverterParameter=1}" />
@@ -42,9 +43,10 @@
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Text="样本号："></TextBlock>
-                <TextBox Grid.Row="0" Grid.Column="1" x:Name="codetxt" Width="350" Height="50" 
+                <hc:TextBox Grid.Row="0" Grid.Column="1" x:Name="codetxt" Width="350" Height="50" 
                          VerticalContentAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold"
-                         Margin="10,0,0,0" Text="{Binding Samplecode}">
+                         Margin="10,0,0,0" Text="{Binding Samplecode}" 
+                            hc:InfoElement.Placeholder="请输入或扫码" ShowClearButton="True">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewKeyUp">
                             <!--TextChanged-->
@@ -56,7 +58,7 @@
                             <i:CallMethodAction TargetObject="{Binding}" MethodName="SampleCode_GotFocus"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                </TextBox>
+                </hc:TextBox>
 
 
             </Grid>
@@ -81,7 +83,7 @@
                          TextWrapping="Wrap" AcceptsReturn="True" IsEnabled="False"/>
 
             </Grid>
-            <Button Grid.Row="3" Grid.ColumnSpan="2" Command="{Binding PrintCommand}" Width="100" Height="30" Margin="0,20,0,10" Content="打印"></Button>
+            <Button Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource ButtonSuccess}" Command="{Binding PrintCommand}" Width="100" Height="30" Margin="0,20,0,10" Content="打印"></Button>
         </Grid>
     </Grid>
 </Window>

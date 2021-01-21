@@ -29,7 +29,16 @@ namespace LabelPrint.ViewModel
         public string Samplecode
         {
             get => _samplecode;
-            set { _samplecode = value; RaisePropertyChanged("Samplecode"); }
+            set
+            {
+                _samplecode = value;
+                if (string.IsNullOrEmpty(_samplecode))
+                {
+                    Barcode = null;
+                    SampleTSCtxt = null;
+                }
+                RaisePropertyChanged("Samplecode");
+            }
         }
         /// <summary>
         /// 实验室编号（条码号）
@@ -111,7 +120,7 @@ namespace LabelPrint.ViewModel
                 TSCLibApi.About();
             });
             // 根据样本编码，显示实验室编码
-            this.CodeChangedCommand = new RelayCommand<string>(async code =>
+            this.CodeChangedCommand = new RelayCommand<string>(code =>
             {
                 //Barcode = null; // 文本变化，先清空显示的Barcode
                 //if (!string.IsNullOrEmpty(code))

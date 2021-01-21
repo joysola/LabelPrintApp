@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:LabelPrint.App"
         xmlns:vm="clr-namespace:LabelPrint.ViewModel;assembly=LabelPrint.ViewModel"
         xmlns:sys="clr-namespace:System;assembly=System.Core"
-        Icon="/images/setting_ico.gif"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
+        Icon="/pictures/setting_ico.gif"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         d:DataContext="{d:DesignInstance Type=vm:SettingVM}"
@@ -42,7 +43,9 @@
             </StackPanel>
             <StackPanel Style="{StaticResource stpMargin}">
                 <TextBlock Width="100" Text="CodeType:" VerticalAlignment="Center"></TextBlock>
-                <ComboBox SelectedValue="{Binding SettingModel.CodeType}" ItemsSource="{Binding CodeTypeDict}" DisplayMemberPath="Value" SelectedValuePath="Key" Width="200"></ComboBox>
+                <hc:ComboBox  SelectedValue="{Binding SettingModel.CodeType}" ItemsSource="{Binding CodeTypeDict}" 
+                           DisplayMemberPath="Value" SelectedValuePath="Key" Width="200"
+                           hc:InfoElement.Placeholder="请选择条形码类型" ShowClearButton="True"></hc:ComboBox>
                 <!--<TextBox Text="{Binding SettingModel.CodeType}"   Width="200" VerticalContentAlignment="Center"/>-->
             </StackPanel>
             <StackPanel Style="{StaticResource stpMargin}">
@@ -52,7 +55,9 @@
             <StackPanel Style="{StaticResource stpMargin}">
                 <TextBlock Width="100" Text="HumanReadable:" VerticalAlignment="Center"></TextBlock>
                 <!--<TextBox Text="{Binding SettingModel.HumanReadable}"   Width="200" VerticalContentAlignment="Center" IsEnabled="False"/>-->
-                <ComboBox SelectedValue="{Binding SettingModel.HumanReadable}" ItemsSource="{Binding HumanReadDict}" DisplayMemberPath="Value" SelectedValuePath="Key" Width="200"></ComboBox>
+                <hc:ComboBox SelectedValue="{Binding SettingModel.HumanReadable}" ItemsSource="{Binding HumanReadDict}" 
+                          DisplayMemberPath="Value" SelectedValuePath="Key" Width="200"
+                          hc:InfoElement.Placeholder="请选择条码文字对齐方式" ShowClearButton="True"></hc:ComboBox>
             </StackPanel>
             <StackPanel Style="{StaticResource stpMargin}">
                 <TextBlock Width="100" Text="Rotation:" VerticalAlignment="Center"></TextBlock>
@@ -77,9 +82,9 @@
           
         </StackPanel>
         <StackPanel Grid.Row="1" Style="{StaticResource stpMargin}" HorizontalAlignment="Center">
-            <Button Height="30" Width="80" Command="{Binding SaveCommand}" Content="确定"></Button>
+            <Button Style="{StaticResource ButtonPrimary}" Height="30" Width="80" Command="{Binding SaveCommand}" Content="确定"></Button>
             <Button Height="30" Width="80" Margin="10,0,10,0" Click="BtnCancel_Click" Content="取消"></Button>
-            <Button Height="30" Width="80" Margin="0,0,10,0" Command="{Binding ResetCommand}" Content="初始化"></Button>
+            <Button Style="{StaticResource ButtonDanger}" Height="30" Width="80" Margin="0,0,10,0" Command="{Binding ResetCommand}" Content="初始化"></Button>
         </StackPanel>
     </Grid>
 </Window>

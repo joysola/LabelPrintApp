@@ -42,6 +42,5 @@ namespace LabelPrint.App
             settingWin.Owner = this;
             settingWin.ShowDialog();
         }
-
     }
 }

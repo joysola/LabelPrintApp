@@ -26,32 +26,46 @@ namespace LabelPrint.ViewModel
         private static readonly string appsettingStr = "BarCodeSetting";
         private Lazy<Func<string, SettingModel, dynamic>> _getPropFunc = new Lazy<Func<string, SettingModel, dynamic>>(() =>
         {
-             var param_propName = Expression.Parameter(typeof(string), "propName");
-             var param_model = Expression.Parameter(typeof(SettingModel), "model");
-             var parm_prop = Expression.Parameter(typeof(PropertyInfo), "prop");
-             var cons_props = Expression.Constant(_settingModelProps, typeof(List<PropertyInfo>));
-             var methodInfo = typeof(Enumerable).GetMethods(BindingFlags.Public | BindingFlags.Static).FirstOrDefault(x => x.GetParameters().Length == 2);
-             var binary_equal = Expression.Equal(param_propName, parm_prop);
-             Func<PropertyInfo, bool> func = Expression.Lambda<Func<PropertyInfo, bool>>(binary_equal).Compile();
-             var xx = Expression.Call(cons_props, methodInfo, Expression.Lambda<Func<PropertyInfo, bool>>(binary_equal));
-             //var cases = new List<SwitchCase>();
+            var param_propName = Expression.Parameter(typeof(string), "propName");
+            var param_model = Expression.Parameter(typeof(SettingModel), "model");
+            var parm_prop = Expression.Parameter(typeof(PropertyInfo), "prop");
+            var cons_props = Expression.Constant(_settingModelProps, typeof(List<PropertyInfo>));
+            var methodInfo = typeof(Enumerable).GetMethods(BindingFlags.Public | BindingFlags.Static).FirstOrDefault(x => x.GetParameters().Length == 2);
+            var binary_equal = Expression.Equal(param_propName, parm_prop);
+            Func<PropertyInfo, bool> func = Expression.Lambda<Func<PropertyInfo, bool>>(binary_equal).Compile();
+            var xx = Expression.Call(cons_props, methodInfo, Expression.Lambda<Func<PropertyInfo, bool>>(binary_equal));
+            //var cases = new List<SwitchCase>();
 
-             //foreach (var prop in _settingModelProps)
-             //{
-             //    var property = Expression.Property(param_model, prop.Name);
-             //    var propertyHash = Expression.Constant(propertyInfo.Name.GetHashCode(), typeof(int));
+            //foreach (var prop in _settingModelProps)
+            //{
+            //    var property = Expression.Property(param_model, prop.Name);
+            //    var propertyHash = Expression.Constant(propertyInfo.Name.GetHashCode(), typeof(int));
 
-             //    cases.Add(Expression.SwitchCase(Expression.Convert(property, typeof(object)), propertyHash));
+            //    cases.Add(Expression.SwitchCase(Expression.Convert(property, typeof(object)), propertyHash));
 
-             //}
-             //Expression.Property(param_model, param_propName)
-             return null;
-         });
+            //}
+            //Expression.Property(param_model, param_propName)
+            return null;
+        });
+        /// <summary>
+        /// 设置实体
+        /// </summary>
         public SettingModel SettingModel
         {
             get => _settingModel;
             set { _settingModel = value; RaisePropertyChanged("SettingModel"); }
         }
+        /// <summary>
+        /// 条码文字对齐方式字典
+        /// </summary>
+        public Dictionary<string, string> HumanReadDict { get; } = new Dictionary<string, string> { { "0", "无" }, { "1", "左对齐" }, { "2", "居中" }, { "3", "右对齐" } };
+        /// <summary>
+        /// 条码类型字典
+        /// </summary>
+        public Dictionary<string, string> CodeTypeDict { get; } = new Dictionary<string, string> {
+            {"128" ,"128(推荐)"}, { "128M", "128M" }, { "EAN128", "EAN128" },{"EAN128M" ,"EAN128M"},
+            {"25" ,"25(纯数字)"},{"25C" ,"25C(纯数字)"},{"25S" ,"25S(纯数字)"},
+            {"TELEPEN" ,"TELEPEN"},{ "DPI","DPI(纯数字)"},{"DPL" ,"DPL(纯数字)"} };
         /// <summary>
         /// 保存配置
         /// </summary>

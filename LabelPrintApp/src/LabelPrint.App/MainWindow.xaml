@@ -5,28 +5,63 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:LabelPrint.App"
+        xmlns:cv="clr-namespace:LabelPrint.App.Converters"
         xmlns:vm="clr-namespace:LabelPrint.ViewModel;assembly=LabelPrint.ViewModel"
         Icon="images/a4z28-xygp9-002.ico"
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance Type=vm:MainWindowVM}"
         mc:Ignorable="d"
-        Title="扫码" Height="450" Width="800">
+        Title="扫码" Height="450" Width="700">
     <Grid>
+        <Grid.Resources>
+            <cv:PrintModel2IsCheckedConverter x:Key="PrintModel2IsCheckedConverter"/>
+        </Grid.Resources>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="3*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
                 <!--<Image Source="images/DSTlogo.png" Stretch="Uniform"  Width="50" Height="50"/>-->
-                <Button Grid.Row="0" Width="70" Height="30" Margin="10,0,0,0" Click="BtnSet_Click">配置</Button>
-                <Button Grid.Row="0" Width="70" Height="30" Margin="10,0,0,0" Command="{Binding TSCVerCommand}">TSC版本</Button>
+                <Button Grid.Row="0" Width="70" Height="30" Margin="10,0,0,0" Click="BtnSet_Click" Content="TSC配置"></Button>
+                <Button Grid.Row="0" Width="70" Height="30" Margin="10,0,0,0" Command="{Binding TSCVerCommand}" Content="TSC版本"></Button>
+                <StackPanel Orientation="Horizontal" Margin="30,0,0,0" >
+                    <TextBlock VerticalAlignment="Center" Text="打印模式："></TextBlock>
+                    <RadioButton GroupName="model" Content="单打" VerticalContentAlignment="Center" IsChecked="{Binding PrintModel, Converter={StaticResource PrintModel2IsCheckedConverter}, ConverterParameter=1}" />
+                    <RadioButton GroupName="model" Content="扫描" VerticalContentAlignment="Center" IsChecked="{Binding PrintModel, Converter={StaticResource PrintModel2IsCheckedConverter}, ConverterParameter=3}" Margin="10,0,0,0"/>
+                    <RadioButton GroupName="model" Content="连打" VerticalContentAlignment="Center" IsChecked="{Binding PrintModel, Converter={StaticResource PrintModel2IsCheckedConverter}, ConverterParameter=2}" Margin="10,0,0,0" Visibility="Hidden"/>
+                </StackPanel>
             </StackPanel>
-            <Grid Grid.Row="1" >
+            <Grid Grid.Row="1">
+                <!--Width="{Binding RelativeSource={RelativeSource AncestorType=Grid, Mode=FindAncestor}, Path=ActualWidth}"-->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Text="样本号："></TextBlock>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="codetxt" Width="350" Height="50" 
+                         VerticalContentAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold"
+                         Margin="10,0,0,0" Text="{Binding Samplecode}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewKeyUp">
+                            <!--TextChanged-->
+                            <i:CallMethodAction TargetObject="{Binding}" MethodName="SampleCode_PreviewKeyUp"/>
+                            <!--<i:InvokeCommandAction  Command="{Binding CodeChangedCommand}" CommandParameter="{Binding ElementName=codetxt, Path=Text}"/>-->
+                        </i:EventTrigger>
+
+                        <i:EventTrigger EventName="GotFocus">
+                            <i:CallMethodAction TargetObject="{Binding}" MethodName="SampleCode_GotFocus"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+
+
+            </Grid>
+            <Grid Grid.Row="2" >
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
@@ -35,26 +70,18 @@
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold">条码号：</TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Text="条码号："></TextBlock>
                 <TextBox Grid.Row="0" Grid.Column="1" x:Name="bartxt" Width="350" Height="50" 
                          VerticalContentAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold"
                          Margin="10,0,0,0" Text="{Binding Barcode}" IsEnabled="False"/>
 
+                <TextBlock Grid.Row="1" Grid.Column="0" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Text="样本信息："></TextBlock>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SampleTSCtxt}" HorizontalAlignment="Left" VerticalContentAlignment="Center"
+                         Margin="10,0,0,0" Height="80" Width="350" FontWeight="Bold"
+                         TextWrapping="Wrap" AcceptsReturn="True" IsEnabled="False"/>
 
-                <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold">样本号：</TextBlock>
-                <TextBox Grid.Row="1" Grid.Column="1" x:Name="codetxt" Width="350" Height="50" 
-                         VerticalContentAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold"
-                         Margin="10,0,0,0" Text="{Binding Samplecode}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="PreviewKeyUp"><!--TextChanged-->
-                            <i:CallMethodAction TargetObject="{Binding}" MethodName="SampleCode_PreviewKeyUp"/>
-                            <!--<i:InvokeCommandAction  Command="{Binding CodeChangedCommand}" CommandParameter="{Binding ElementName=codetxt, Path=Text}"/>-->
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </TextBox>
-
-                <Button Grid.Row="2" Grid.ColumnSpan="2" Command="{Binding PrintCommand}" Width="100" Height="30" Margin="0,20,0,10">打印</Button>
             </Grid>
+            <Button Grid.Row="3" Grid.ColumnSpan="2" Command="{Binding PrintCommand}" Width="100" Height="30" Margin="0,20,0,10" Content="打印"></Button>
         </Grid>
     </Grid>
 </Window>

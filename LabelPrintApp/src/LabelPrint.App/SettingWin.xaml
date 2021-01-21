@@ -6,10 +6,12 @@
         xmlns:local="clr-namespace:LabelPrint.App"
         xmlns:vm="clr-namespace:LabelPrint.ViewModel;assembly=LabelPrint.ViewModel"
         xmlns:sys="clr-namespace:System;assembly=System.Core"
+        Icon="/images/setting_ico.gif"
         WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
         d:DataContext="{d:DesignInstance Type=vm:SettingVM}"
         mc:Ignorable="d"
-        Title="配置" Height="470" Width="400">
+        Title="配置" Height="450" Width="400">
     <Grid>
         <Grid.Resources>
             <Style TargetType="StackPanel" x:Key="stpMargin">
@@ -17,59 +19,67 @@
                 <Setter Property="Orientation" Value="Horizontal"></Setter>
             </Style>
         </Grid.Resources>
-        <StackPanel VerticalAlignment="Top">
-            <TextBlock Margin="5,10,10,10">配置参数</TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0" VerticalAlignment="Top">
+            <TextBlock Margin="5,10,10,10" Text="配置参数" FontWeight="Bold"></TextBlock>
             <StackPanel Style="{StaticResource stpMargin}">
-                <TextBlock Width="100" >Code:</TextBlock>
+                <TextBlock Width="100" Text="Code:" VerticalAlignment="Center"></TextBlock>
                 <TextBox Text="{Binding SettingModel.Code}"   Width="200" VerticalContentAlignment="Center" IsEnabled="False"/>
             </StackPanel>
 
             <StackPanel Style="{StaticResource stpMargin}">
-                <TextBlock Width="100" >X:</TextBlock>
+                <TextBlock Width="100" Text="X:" VerticalAlignment="Center"></TextBlock>
                 <TextBox Text="{Binding SettingModel.X}"   Width="200" VerticalContentAlignment="Center"/>
             </StackPanel>
 
             <StackPanel Style="{StaticResource stpMargin}">
-                <TextBlock Width="100" >Y:</TextBlock>
+                <TextBlock Width="100" Text="Y:" VerticalAlignment="Center"></TextBlock>
                 <TextBox Text="{Binding SettingModel.Y}"   Width="200" VerticalContentAlignment="Center"/>
             </StackPanel>
             <StackPanel Style="{StaticResource stpMargin}">
-                <TextBlock Width="100" >CodeType:</TextBlock>
-                <TextBox Text="{Binding SettingModel.CodeType}"   Width="200" VerticalContentAlignment="Center"/>
+                <TextBlock Width="100" Text="CodeType:" VerticalAlignment="Center"></TextBlock>
+                <ComboBox SelectedValue="{Binding SettingModel.CodeType}" ItemsSource="{Binding CodeTypeDict}" DisplayMemberPath="Value" SelectedValuePath="Key" Width="200"></ComboBox>
+                <!--<TextBox Text="{Binding SettingModel.CodeType}"   Width="200" VerticalContentAlignment="Center"/>-->
             </StackPanel>
             <StackPanel Style="{StaticResource stpMargin}">
-                <TextBlock Width="100" >Height:</TextBlock>
+                <TextBlock Width="100" Text="Height:" VerticalAlignment="Center"></TextBlock>
                 <TextBox Text="{Binding SettingModel.Height}"   Width="200" VerticalContentAlignment="Center"/>
             </StackPanel>
             <StackPanel Style="{StaticResource stpMargin}">
-                <TextBlock Width="100" >HumanReadable:</TextBlock>
-                <TextBox Text="{Binding SettingModel.HumanReadable}"   Width="200" VerticalContentAlignment="Center"/>
+                <TextBlock Width="100" Text="HumanReadable:" VerticalAlignment="Center"></TextBlock>
+                <!--<TextBox Text="{Binding SettingModel.HumanReadable}"   Width="200" VerticalContentAlignment="Center" IsEnabled="False"/>-->
+                <ComboBox SelectedValue="{Binding SettingModel.HumanReadable}" ItemsSource="{Binding HumanReadDict}" DisplayMemberPath="Value" SelectedValuePath="Key" Width="200"></ComboBox>
             </StackPanel>
             <StackPanel Style="{StaticResource stpMargin}">
-                <TextBlock Width="100" >Rotation:</TextBlock>
-                <TextBox Text="{Binding SettingModel.Rotation}"   Width="200" VerticalContentAlignment="Center"/>
+                <TextBlock Width="100" Text="Rotation:" VerticalAlignment="Center"></TextBlock>
+                <TextBox Text="{Binding SettingModel.Rotation}"   Width="200" VerticalContentAlignment="Center" IsEnabled="False"/>
             </StackPanel>
             <StackPanel Style="{StaticResource stpMargin}">
-                <TextBlock Width="100" >Narrow:</TextBlock>
-                <TextBox Text="{Binding SettingModel.Narrow}"   Width="200" VerticalContentAlignment="Center"/>
+                <TextBlock Width="100" Text="Narrow:" VerticalAlignment="Center"></TextBlock>
+                <TextBox Text="{Binding SettingModel.Narrow}"   Width="200" VerticalContentAlignment="Center" IsEnabled="False"/>
             </StackPanel>
             <StackPanel Style="{StaticResource stpMargin}">
-                <TextBlock Width="100" >Width:</TextBlock>
-                <TextBox Text="{Binding SettingModel.Width}"   Width="200" VerticalContentAlignment="Center"/>
+                <TextBlock Width="100" Text="Width:" VerticalAlignment="Center"></TextBlock>
+                <TextBox Text="{Binding SettingModel.Width}"   Width="200" VerticalContentAlignment="Center" IsEnabled="False"/>
             </StackPanel>
             <StackPanel Style="{StaticResource stpMargin}">
-                <TextBlock Width="100" >Alignment:</TextBlock>
-                <TextBox Text="{Binding SettingModel.Alignment}"   Width="200" VerticalContentAlignment="Center"/>
+                <TextBlock Width="100" Text="Alignment:" VerticalAlignment="Center"></TextBlock>
+                <TextBox Text="{Binding SettingModel.Alignment}"   Width="200" VerticalContentAlignment="Center" IsEnabled="False"/>
             </StackPanel>
             <!--<StackPanel Style="{StaticResource stpMargin}">
                 <TextBlock Width="100" >Content:</TextBlock>
                 <TextBox Text="{Binding SettingModel.Content}" Height="70" Width="200" TextWrapping="Wrap" AcceptsReturn="True"/>
             </StackPanel>-->
-            <StackPanel Style="{StaticResource stpMargin}" HorizontalAlignment="Center">
-                <Button Height="30" Width="80" Command="{Binding SaveCommand}">确定</Button>
-                <Button Height="30" Width="80" Margin="10,0,10,0" Click="BtnCancel_Click">取消</Button>
-                <Button Height="30" Width="80" Margin="0,0,10,0" Command="{Binding ResetCommand}">初始化</Button>
-            </StackPanel>
+          
+        </StackPanel>
+        <StackPanel Grid.Row="1" Style="{StaticResource stpMargin}" HorizontalAlignment="Center">
+            <Button Height="30" Width="80" Command="{Binding SaveCommand}" Content="确定"></Button>
+            <Button Height="30" Width="80" Margin="10,0,10,0" Click="BtnCancel_Click" Content="取消"></Button>
+            <Button Height="30" Width="80" Margin="0,0,10,0" Command="{Binding ResetCommand}" Content="初始化"></Button>
         </StackPanel>
     </Grid>
 </Window>

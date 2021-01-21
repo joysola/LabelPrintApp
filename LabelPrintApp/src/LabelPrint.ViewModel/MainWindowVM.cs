@@ -7,7 +7,9 @@ using LabelPrint.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -18,7 +20,9 @@ namespace LabelPrint.ViewModel
     {
         private string _samplecode;
         private string _barcode;
-
+        private string _sampleTSCtxt;
+        private int? _printModel = 1;
+        private static readonly object _locker = new object();
         /// <summary>
         /// 样本编号
         /// </summary>
@@ -34,6 +38,20 @@ namespace LabelPrint.ViewModel
         {
             get { return _barcode; }
             set { _barcode = value; RaisePropertyChanged("Barcode"); }
+        }
+        /// <summary>
+        /// 患者信息
+        /// </summary>
+        public string SampleTSCtxt
+        {
+            get => _sampleTSCtxt;
+            set { _sampleTSCtxt = value; RaisePropertyChanged("SampleTSCtxt"); }
+        }
+
+        public int? PrintModel
+        {
+            get => _printModel;
+            set { _printModel = value; RaisePropertyChanged("PrintModel"); }
         }
 
         /// <summary>
@@ -66,6 +84,7 @@ namespace LabelPrint.ViewModel
                 {
                     try
                     {
+                        Monitor.Enter(_locker); // 加锁，防止端口被占用
                         TSCLibApi.OpenPort("TSC TTP-244 Pro"); // 打开端口
                         TSCLibApi.Setup("51", "17.2", "5", "15", "0", "2", "0");
                         TSCLibApi.SendCommand("SET TEAR ON"); // The label gap will stop at the tear off position after print.
@@ -82,6 +101,7 @@ namespace LabelPrint.ViewModel
                     finally
                     {
                         TSCLibApi.ClosePort(); // 关闭端口
+                        Monitor.Exit(_locker);
                     }
                 }
             });
@@ -112,6 +132,7 @@ namespace LabelPrint.ViewModel
                 var sample = SampleCodeService.Instance.GetSamplebyCode(samplecode);
                 if (!string.IsNullOrEmpty(sample.laboratoryCode))
                 {
+                    this.ShowSampeInfo(sample); // 显示样本信息
                     Barcode = sample.laboratoryCode; // 获取实验室编号
                 }
                 WhirlingControlManager.CloseWaitingForm();
@@ -129,14 +150,46 @@ namespace LabelPrint.ViewModel
                 var tbx = sender as TextBox;
                 tbx.SelectAll(); // 文本全选
                 Barcode = null; // 文本变化，先清空显示的Barcode
+                SampleTSCtxt = null; // 文本框变化，清空样本信息
                 if (!string.IsNullOrEmpty(tbx.Text))
                 {
                     await this.SearchSampleTSC(tbx.Text); // 搜索Sample实例
-                    this.PrintCommand.Execute(null); // 打印条码
+                    if (PrintModel == 3)
+                    {
+                        // 停顿
+                    }
+                    else
+                    {
+                        this.PrintCommand.Execute(null); // 打印条码
+                    }
                 }
             }
         }
-
+        /// <summary>
+        /// 样本编码获取焦点
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void SampleCode_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var tbx = sender as TextBox;
+            if (!string.IsNullOrEmpty(tbx.Text))
+            {
+                // 必须使用此触发方式，内部事件先执行，后执行此方法
+                Dispatcher.CurrentDispatcher.InvokeAsync(() => tbx.SelectAll());
+            }
+        }
+        /// <summary>
+        /// 显示样本信息
+        /// </summary>
+        /// <param name="sampleTSC"></param>
+        private void ShowSampeInfo(SampleTSC sampleTSC)
+        {
+            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+            {
+                this.SampleTSCtxt = $"患者姓名: {sampleTSC.patientName};   患者年龄: {sampleTSC.age};\r\n医院: {sampleTSC.hospitalName};\r\n地址: {sampleTSC.provinceName}/{sampleTSC.cityName}/{sampleTSC.areaName};";
+            });
+        }
         /// <summary>
         /// 打印二维码
         /// </summary>

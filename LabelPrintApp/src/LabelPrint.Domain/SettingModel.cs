@@ -19,6 +19,10 @@ namespace LabelPrint.Domain
         /// </summary>
         public string X { get; set; } = "115";
         /// <summary>
+        /// 起始x坐标
+        /// </summary>
+        public string X_Other { get; set; } = "315";
+        /// <summary>
         /// 起始y坐标
         /// </summary>
         public string Y { get; set; } = "17";

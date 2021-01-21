@@ -135,7 +135,7 @@ namespace LabelPrint.App
             catch (Exception ex)
             {
                 Logger.Error("不可恢复的非UI线程全局异常", ex);
-                ConfirmMessageBox.Show("应用程序发生不可恢复的异常，即将退出！", "系统提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("应用程序发生不可恢复的异常，即将退出！", "系统提示", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -145,16 +145,17 @@ namespace LabelPrint.App
             {
                 Logger.Error("UI线程全局异常", e.Exception);
                 // 针对Api访问的请求处理
-                if (e.Exception.InnerException is HttpClientException)
+                if (e.Exception.InnerException is HttpClientException || e.Exception is HttpClientException)
                 {
-                    ConfirmMessageBox.Show("", e.Exception.InnerException.Message, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    var exception = e.Exception.InnerException ?? e.Exception;
+                    MessageBox.Show(exception.Message, "错误", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
                 e.Handled = true;
             }
             catch (Exception ex)
             {
                 Logger.Error("不可恢复的UI线程全局异常", ex);
-                ConfirmMessageBox.Show("应用程序发生不可恢复的异常，即将退出！", "系统提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("应用程序发生不可恢复的异常，即将退出！", "系统提示", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
     }

@@ -7,8 +7,30 @@
     <LangVersion>8.0</LangVersion>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\HandyControl_Shared\Properties\AssemblyInfo.cs" Link="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\HandyControl_Shared\Properties\Langs\Lang.Designer.cs" Link="Properties\Langs\Lang.Designer.cs" />
+    <Compile Include="..\HandyControl_Shared\Properties\Langs\LangProvider.cs" Link="Properties\Langs\LangProvider.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\HandyControl_Shared\Properties\Langs\Lang.ca-ES.resx" Link="Properties\Langs\Lang.ca-ES.resx" />
+    <EmbeddedResource Include="..\HandyControl_Shared\Properties\Langs\Lang.en.resx" Link="Properties\Langs\Lang.en.resx" />
+    <EmbeddedResource Include="..\HandyControl_Shared\Properties\Langs\Lang.fa.resx" Link="Properties\Langs\Lang.fa.resx" />
+    <EmbeddedResource Include="..\HandyControl_Shared\Properties\Langs\Lang.fr.resx" Link="Properties\Langs\Lang.fr.resx" />
+    <EmbeddedResource Include="..\HandyControl_Shared\Properties\Langs\Lang.ko-KR.resx" Link="Properties\Langs\Lang.ko-KR.resx" />
+    <EmbeddedResource Include="..\HandyControl_Shared\Properties\Langs\Lang.pl.resx" Link="Properties\Langs\Lang.pl.resx" />
+    <EmbeddedResource Include="..\HandyControl_Shared\Properties\Langs\Lang.pt-BR.resx" Link="Properties\Langs\Lang.pt-BR.resx" />
+    <EmbeddedResource Include="..\HandyControl_Shared\Properties\Langs\Lang.resx" Link="Properties\Langs\Lang.resx" />
+    <EmbeddedResource Include="..\HandyControl_Shared\Properties\Langs\Lang.ru.resx" Link="Properties\Langs\Lang.ru.resx" />
+    <EmbeddedResource Include="..\HandyControl_Shared\Properties\Langs\Lang.tr.resx" Link="Properties\Langs\Lang.tr.resx" />
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\Langs\" />
   </ItemGroup>
   
   

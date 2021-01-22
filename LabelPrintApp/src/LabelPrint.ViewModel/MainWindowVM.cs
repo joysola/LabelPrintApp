@@ -22,7 +22,9 @@ namespace LabelPrint.ViewModel
         private string _barcode;
         private string _sampleTSCtxt;
         private int? _printModel = 1;
+        private int _count = 1;
         private static readonly object _locker = new object();
+        private static readonly SemaphoreSlim _locker2 = new SemaphoreSlim(1, 1);
         /// <summary>
         /// 样本编号
         /// </summary>
@@ -56,11 +58,21 @@ namespace LabelPrint.ViewModel
             get => _sampleTSCtxt;
             set { _sampleTSCtxt = value; RaisePropertyChanged("SampleTSCtxt"); }
         }
-
+        /// <summary>
+        /// 打印模式（1 单打，2 连打，3 扫描）
+        /// </summary>
         public int? PrintModel
         {
             get => _printModel;
             set { _printModel = value; RaisePropertyChanged("PrintModel"); }
+        }
+        /// <summary>
+        /// 成功打印的次数
+        /// </summary>
+        public int Count2
+        {
+            get => _count;
+            set { _count = value; RaisePropertyChanged("Count2"); }
         }
 
         /// <summary>
@@ -93,7 +105,7 @@ namespace LabelPrint.ViewModel
                 {
                     try
                     {
-                        Monitor.Enter(_locker); // 加锁，防止端口被占用
+
                         TSCLibApi.OpenPort("TSC TTP-244 Pro"); // 打开端口
                         TSCLibApi.Setup("51", "17.2", "5", "15", "0", "2", "0");
                         TSCLibApi.SendCommand("SET TEAR ON"); // The label gap will stop at the tear off position after print.
@@ -106,11 +118,12 @@ namespace LabelPrint.ViewModel
 
                         // TSCLibApi.WindowsFont(20, 0, 15, 0, 0, 0, "SimSun", Barcode);
                         TSCLibApi.PrintLabel("1", "1");
+                        Count2++;
                     }
                     finally
                     {
                         TSCLibApi.ClosePort(); // 关闭端口
-                        Monitor.Exit(_locker);
+
                     }
                 }
             });
@@ -137,14 +150,20 @@ namespace LabelPrint.ViewModel
         {
             return Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
-                WhirlingControlManager.ShowWaitingForm();
-                var sample = SampleCodeService.Instance.GetSamplebyCode(samplecode);
-                if (!string.IsNullOrEmpty(sample.laboratoryCode))
+                try
                 {
-                    this.ShowSampeInfo(sample); // 显示样本信息
-                    Barcode = sample.laboratoryCode; // 获取实验室编号
+                    WhirlingControlManager.ShowWaitingForm();
+                    var sample = SampleCodeService.Instance.GetSamplebyCode(samplecode);
+                    if (!string.IsNullOrEmpty(sample.laboratoryCode))
+                    {
+                        this.ShowSampeInfo(sample); // 显示样本信息
+                        Barcode = sample.laboratoryCode; // 获取实验室编号
+                    }
                 }
-                WhirlingControlManager.CloseWaitingForm();
+                finally
+                {
+                    WhirlingControlManager.CloseWaitingForm();
+                }
             });
         }
         /// <summary>
@@ -156,21 +175,31 @@ namespace LabelPrint.ViewModel
         {
             if (e.Key == Key.Enter)
             {
-                var tbx = sender as TextBox;
-                tbx.SelectAll(); // 文本全选
-                Barcode = null; // 文本变化，先清空显示的Barcode
-                SampleTSCtxt = null; // 文本框变化，清空样本信息
-                if (!string.IsNullOrEmpty(tbx.Text))
+                try
                 {
-                    await this.SearchSampleTSC(tbx.Text); // 搜索Sample实例
-                    if (PrintModel == 3)
+                    //Monitor.Enter(_locker); // 加锁，防止端口被占用
+                    var tbx = sender as TextBox;
+                    tbx.SelectAll(); // 文本全选
+                    Barcode = null; // 文本变化，先清空显示的Barcode
+                    SampleTSCtxt = null; // 文本框变化，清空样本信息
+                    if (!string.IsNullOrEmpty(tbx.Text))
                     {
-                        // 停顿
+                        await this.SearchSampleTSC(tbx.Text); // 搜索Sample实例
+                        if (PrintModel == 3)
+                        {
+                            // 停顿
+                        }
+                        else
+                        {
+                            await _locker2.WaitAsync();
+                            this.PrintCommand.Execute(null); // 打印条码
+                        }
                     }
-                    else
-                    {
-                        this.PrintCommand.Execute(null); // 打印条码
-                    }
+                }
+                finally
+                {
+                    //Monitor.Exit(_locker);
+                    _locker2.Release();
                 }
             }
         }

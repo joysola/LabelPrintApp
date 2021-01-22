@@ -1,4 +1,6 @@
-﻿using LabelPrint.ViewModel;
+﻿using GalaSoft.MvvmLight.Messaging;
+using LabelPrint.Domain;
+using LabelPrint.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +25,22 @@ namespace LabelPrint.App
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainWindowVM();
+            this.RegisterCommand();
+            var vm = new MainWindowVM();
+            this.DataContext = vm;
             this.Loaded += (sender, e) =>
             {
                 this.codetxt.Focus();
+                vm.Count2 = 0; // 防止badge不更新
             };
+        }
+
+        private void RegisterCommand()
+        {
+            Messenger.Default.Register<bool>(this, MessengerKeyEnum.CloseWin, data =>
+            {
+                this.DrawerRight.IsOpen = false;
+            });
         }
 
         /// <summary>
@@ -37,9 +50,10 @@ namespace LabelPrint.App
         /// <param name="e"></param>
         private void BtnSet_Click(object sender, RoutedEventArgs e)
         {
-            SettingWin settingWin = new SettingWin();
-            settingWin.Owner = this;
-            settingWin.ShowDialog();
+            this.DrawerRight.IsOpen = true;
+            //SettingWin settingWin = new SettingWin();
+            //settingWin.Owner = this;
+            //settingWin.ShowDialog();
         }
     }
 }

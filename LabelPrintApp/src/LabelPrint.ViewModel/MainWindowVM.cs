@@ -178,6 +178,7 @@ namespace LabelPrint.ViewModel
                 try
                 {
                     //Monitor.Enter(_locker); // 加锁，防止端口被占用
+                    await _locker2.WaitAsync(); // 加锁
                     var tbx = sender as TextBox;
                     tbx.SelectAll(); // 文本全选
                     Barcode = null; // 文本变化，先清空显示的Barcode
@@ -191,7 +192,6 @@ namespace LabelPrint.ViewModel
                         }
                         else
                         {
-                            await _locker2.WaitAsync();
                             this.PrintCommand.Execute(null); // 打印条码
                         }
                     }

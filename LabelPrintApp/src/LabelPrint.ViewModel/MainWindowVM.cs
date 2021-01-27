@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Command;
 using LabelPrint.ApiClient.Service;
 using LabelPrint.Common;
 using LabelPrint.Domain;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -105,7 +106,7 @@ namespace LabelPrint.ViewModel
                 {
                     try
                     {
-
+                        Logger.Info($"条码{Barcode}开始打印!");
                         TSCLibApi.OpenPort("TSC TTP-244 Pro"); // 打开端口
                         TSCLibApi.Setup("51", "17.2", "5", "15", "0", "2", "0");
                         TSCLibApi.SendCommand("SET TEAR ON"); // The label gap will stop at the tear off position after print.
@@ -123,7 +124,7 @@ namespace LabelPrint.ViewModel
                     finally
                     {
                         TSCLibApi.ClosePort(); // 关闭端口
-
+                        Logger.Info($"条码{Barcode}打印完成!");
                     }
                 }
             });
@@ -158,6 +159,10 @@ namespace LabelPrint.ViewModel
                     {
                         this.ShowSampeInfo(sample); // 显示样本信息
                         Barcode = sample.laboratoryCode; // 获取实验室编号
+                        Task.Run(() =>
+                        {
+                            Logger.Info($"样本信息:{JsonConvert.SerializeObject(sample)}");
+                        });
                     }
                 }
                 finally

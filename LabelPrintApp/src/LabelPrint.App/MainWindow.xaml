@@ -9,7 +9,7 @@
         xmlns:vm="clr-namespace:LabelPrint.ViewModel;assembly=LabelPrint.ViewModel"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         xmlns:ctl="clr-namespace:LabelPrint.App.Controls"
-        Icon="pictures/a4z28-xygp9-002.ico"
+        Icon="pictures/barcode_scan.ico"
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance Type=vm:MainWindowVM}"

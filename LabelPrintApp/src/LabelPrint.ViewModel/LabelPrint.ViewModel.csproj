@@ -31,6 +31,9 @@
     <Reference Include="HttpClientExtension">
       <HintPath>..\..\lib\HttpClientEx\HttpClientExtension.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <!--<Reference Include="PresentationCore">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\PresentationCore.dll</HintPath>
     </Reference>

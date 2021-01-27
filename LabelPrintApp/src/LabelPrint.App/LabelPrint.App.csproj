@@ -5,6 +5,7 @@
     <LangVersion>8.0</LangVersion>
     <TargetFrameworks>net461;net462;netcoreapp3.1</TargetFrameworks>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>barcode_scan.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net461|AnyCPU'">
@@ -13,6 +14,7 @@
 
   <ItemGroup>
     <None Remove="pictures\a4z28-xygp9-002.ico" />
+    <None Remove="pictures\barcode_scan.ico" />
     <None Remove="pictures\DSTlogo.png" />
     <None Remove="pictures\setting_ico.gif" />
   </ItemGroup>
@@ -60,6 +62,7 @@
 
   <ItemGroup>
     <Resource Include="pictures\a4z28-xygp9-002.ico" />
+    <Resource Include="pictures\barcode_scan.ico" />
     <Resource Include="pictures\DSTlogo.png" />
     <Resource Include="pictures\setting_ico.gif" />
   </ItemGroup>

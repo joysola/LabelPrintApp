@@ -14,11 +14,12 @@
         WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance Type=vm:MainWindowVM}"
         mc:Ignorable="d"
-        Title="扫码" Height="550" Width="700">
+        Title="扫码" Height="600" Width="700">
     <Grid>
         <Grid.Resources>
             <cv:PrintModel2IsCheckedConverter x:Key="PrintModel2IsCheckedConverter"/>
             <cv:RbtnIsChecked2PrintBtnVisConverter x:Key="RbtnIsChecked2PrintBtnVisConverter"/>
+            <cv:GridSampleInfoVisibilityConverter x:Key="GridSampleInfoVisibilityConverter"/>
         </Grid.Resources>
         <!--右侧抽屉-->
         <hc:Drawer Name="DrawerRight" MaskCanClose="True">
@@ -48,7 +49,7 @@
                     <TextBlock VerticalAlignment="Center" Text="模式：" FontWeight="Bold"></TextBlock>
                     <RadioButton GroupName="model" Content="打印" VerticalContentAlignment="Center" IsChecked="{Binding PrintModel, Converter={StaticResource PrintModel2IsCheckedConverter}, ConverterParameter=1}" />
                     <RadioButton GroupName="model" Content="扫描" VerticalContentAlignment="Center" IsChecked="{Binding PrintModel, Converter={StaticResource PrintModel2IsCheckedConverter}, ConverterParameter=3}" Margin="10,0,0,0" Name="RbtnScan"/>
-                    <RadioButton GroupName="model" Content="连打" VerticalContentAlignment="Center" IsChecked="{Binding PrintModel, Converter={StaticResource PrintModel2IsCheckedConverter}, ConverterParameter=2}" Margin="10,0,0,0" Visibility="Hidden"/>
+                    <RadioButton GroupName="model" Content="双打" VerticalContentAlignment="Center" IsChecked="{Binding PrintModel, Converter={StaticResource PrintModel2IsCheckedConverter}, ConverterParameter=2}" Margin="10,0,0,0"/>
                 </StackPanel>
             </StackPanel>
             <Grid Grid.Row="1">
@@ -83,7 +84,8 @@
 
 
             </Grid>
-            <Grid Grid.Row="2" >
+            <!--单打-->
+            <Grid Grid.Row="2" Visibility="{Binding PrintModel,Converter={StaticResource GridSampleInfoVisibilityConverter},ConverterParameter=1}">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -104,6 +106,55 @@
                          TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True" Focusable="False"/>
 
             </Grid>
+            <!--双打-->
+            <!--Visibility="{Binding PrintModel,Converter={StaticResource GridSampleInfoVisibilityConverter},ConverterParameter=2}"-->
+            <Grid Grid.Row="2" Visibility="{Binding PrintModel,Converter={StaticResource GridSampleInfoVisibilityConverter},ConverterParameter=2}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <GroupBox Grid.Column="0"  Header="第一个样本" Padding="10" Margin="10" Style="{StaticResource GroupBoxTab}">
+                    <Border Background="{DynamicResource RegionBrush}" CornerRadius="4">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="2*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="3*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Text="条码号："></TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Barcode}" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Text="样本信息："></TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SampleTSCtxt}" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
+                        </Grid>
+                    </Border>
+                </GroupBox>
+                
+                <GroupBox Grid.Column="1"  Header="第二个样本" Padding="10" Margin="10" Style="{StaticResource GroupBoxTab}">
+                    <Border Background="{DynamicResource RegionBrush}" CornerRadius="4">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="2*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="3*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Text="条码号："/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Barcode2}" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Text="样本信息："/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SampleTSCtxt2}" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
+
+                        </Grid>
+                    </Border>
+                </GroupBox>
+            </Grid>
+
             <Button Grid.Row="3" Grid.ColumnSpan="2" Width="100" Height="30" Margin="0,20,0,10" Content="打印"
                     Style="{StaticResource ButtonSuccess}" Command="{Binding PrintCommand}" Visibility="{Binding ElementName=RbtnScan,Path=IsChecked,Converter={StaticResource RbtnIsChecked2PrintBtnVisConverter}}"></Button>
         </Grid>

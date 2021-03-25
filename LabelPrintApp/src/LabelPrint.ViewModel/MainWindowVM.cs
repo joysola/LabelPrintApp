@@ -7,6 +7,7 @@ using LabelPrint.Domain;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,12 +21,19 @@ namespace LabelPrint.ViewModel
     public class MainWindowVM : ViewModelBase
     {
         private string _samplecode;
+        private string _tempBarcode;
+        private string _tempSampleTSCtxt;
+
         private string _barcode;
         private string _sampleTSCtxt;
+        private string _barcode2;
+        private string _sampleTSCtxt2;
+
         private int? _printModel = 1;
         private int _count = 1;
-        private static readonly object _locker = new object();
+        private int pairCount = 0;
         private static readonly SemaphoreSlim _locker2 = new SemaphoreSlim(1, 1);
+
         /// <summary>
         /// 样本编号
         /// </summary>
@@ -39,16 +47,36 @@ namespace LabelPrint.ViewModel
                 {
                     Barcode = null;
                     SampleTSCtxt = null;
+                    Barcode2 = null;
+                    SampleTSCtxt2 = null;
+                    _tempBarcode = null;
+                    _tempSampleTSCtxt = null;
                 }
                 RaisePropertyChanged("Samplecode");
             }
+        }
+        /// <summary>
+        /// 实验室编号（条码号）2
+        /// </summary>
+        public string Barcode2
+        {
+            get => _barcode2;
+            set { _barcode2 = value; RaisePropertyChanged("Barcode2"); }
+        }
+        /// <summary>
+        /// 患者信息2
+        /// </summary>
+        public string SampleTSCtxt2
+        {
+            get => _sampleTSCtxt2;
+            set { _sampleTSCtxt2 = value; RaisePropertyChanged("SampleTSCtxt2"); }
         }
         /// <summary>
         /// 实验室编号（条码号）
         /// </summary>
         public string Barcode
         {
-            get { return _barcode; }
+            get => _barcode;
             set { _barcode = value; RaisePropertyChanged("Barcode"); }
         }
         /// <summary>
@@ -65,7 +93,18 @@ namespace LabelPrint.ViewModel
         public int? PrintModel
         {
             get => _printModel;
-            set { _printModel = value; RaisePropertyChanged("PrintModel"); }
+            set
+            {
+                _printModel = value;
+                // 切模式的时候清空历史数据
+                Barcode = null;
+                Barcode2 = null;
+                SampleTSCtxt = null;
+                SampleTSCtxt2 = null;
+                _tempBarcode = null;
+                _tempSampleTSCtxt = null;
+                RaisePropertyChanged("PrintModel");
+            }
         }
         /// <summary>
         /// 成功打印的次数
@@ -102,31 +141,44 @@ namespace LabelPrint.ViewModel
             // 打印条码
             this.PrintCommand = new RelayCommand(() =>
             {
-                if (!string.IsNullOrEmpty(Barcode))
+
+                try
                 {
-                    try
+
+                    Logger.Info($"条码开始打印!");
+                    TSCLibApi.OpenPort("TSC TTP-244 Pro"); // 打开端口
+                    TSCLibApi.Setup("51", "17.2", "5", "15", "0", "2", "0");
+                    //TSCLibApi.Setup("101", "17.2", "5", "15", "0", "2", "0");
+                    TSCLibApi.SendCommand("SET TEAR ON"); // The label gap will stop at the tear off position after print.
+                    TSCLibApi.ClearBuffer(); // 清除缓存
+                    var setting = ExtendAppContext.Current.AppSettingModel;
+                    // 第一个
+                    if (!string.IsNullOrEmpty(Barcode))
                     {
-                        Logger.Info($"条码{Barcode}开始打印!");
-                        TSCLibApi.OpenPort("TSC TTP-244 Pro"); // 打开端口
-                        TSCLibApi.Setup("51", "17.2", "5", "15", "0", "2", "0");
-                        TSCLibApi.SendCommand("SET TEAR ON"); // The label gap will stop at the tear off position after print.
-                        TSCLibApi.ClearBuffer(); // 清除缓存
-                        var setting = ExtendAppContext.Current.AppSettingModel;
+                        Logger.Info($"条码{Barcode}开始打印！");
                         string barcodeCommandStr = $"{setting.Code} {setting.X},{setting.Y},\"{setting.CodeType}\",{setting.Height},{setting.HumanReadable},{setting.Rotation},{setting.Narrow},{setting.Width},{setting.Alignment},\"{Barcode}\"";
                         TSCLibApi.SendCommand(barcodeCommandStr);
-                        //string test = "BARCODE 400,50, \"TELEPENN\",60,2,0,2,6,2, \"20210112108\"";
-                        //TSCLibApi.SendCommand(test);
-
-                        // TSCLibApi.WindowsFont(20, 0, 15, 0, 0, 0, "SimSun", Barcode);
-                        TSCLibApi.PrintLabel("1", "1");
                         Count2++;
                     }
-                    finally
+                    // 第二个
+                    if (!string.IsNullOrEmpty(Barcode2))
                     {
-                        TSCLibApi.ClosePort(); // 关闭端口
-                        Logger.Info($"条码{Barcode}打印完成!");
+                        Logger.Info($"条码{Barcode2}开始打印！");
+                        string barcodeCommandStr2 = $"{setting.Code} {setting.X_Other},{setting.Y},\"{setting.CodeType}\",{setting.Height},{setting.HumanReadable},{setting.Rotation},{setting.Narrow},{setting.Width},{setting.Alignment},\"{Barcode2}\"";
+                        TSCLibApi.SendCommand(barcodeCommandStr2);
+                        Count2++;
                     }
+
+                    // TSCLibApi.WindowsFont(20, 0, 15, 0, 0, 0, "SimSun", Barcode);
+                    TSCLibApi.PrintLabel("1", "1");
+                    //Count2++;
                 }
+                finally
+                {
+                    TSCLibApi.ClosePort(); // 关闭端口
+                    Logger.Info($"条码{Barcode},{Barcode2}打印完成!");
+                }
+
             });
             // TSC的dll版本
             this.TSCVerCommand = new RelayCommand(() =>
@@ -157,8 +209,9 @@ namespace LabelPrint.ViewModel
                     var sample = SampleCodeService.Instance.GetSamplebyCode(samplecode);
                     if (!string.IsNullOrEmpty(sample.laboratoryCode))
                     {
-                        this.ShowSampeInfo(sample); // 显示样本信息
-                        Barcode = sample.laboratoryCode; // 获取实验室编号
+                        _tempSampleTSCtxt = this.ShowSampeInfo(sample); // 显示样本信息
+                        _tempBarcode = sample.laboratoryCode; // 获取实验室编号
+
                         Task.Run(() =>
                         {
                             Logger.Info($"样本信息:{JsonConvert.SerializeObject(sample)}");
@@ -186,18 +239,41 @@ namespace LabelPrint.ViewModel
                     await _locker2.WaitAsync(); // 加锁
                     var tbx = sender as TextBox;
                     tbx.SelectAll(); // 文本全选
-                    Barcode = null; // 文本变化，先清空显示的Barcode
-                    SampleTSCtxt = null; // 文本框变化，清空样本信息
+
                     if (!string.IsNullOrEmpty(tbx.Text))
                     {
+                        _tempBarcode = null;
+                        _tempSampleTSCtxt = null;
                         await this.SearchSampleTSC(tbx.Text); // 搜索Sample实例
-                        if (PrintModel == 3)
+
+                        if (PrintModel == 2) // 双打
                         {
-                            // 停顿
+                            pairCount++;
+                            if (pairCount == 1)// 第一次
+                            {
+                                // 先清空第二个
+                                Barcode2 = null;
+                                SampleTSCtxt2 = null;
+
+                                Barcode = _tempBarcode;
+                                SampleTSCtxt = _tempSampleTSCtxt;
+                            }
+                            else if (pairCount == 2)
+                            {
+                                Barcode2 = _tempBarcode;
+                                SampleTSCtxt2 = _tempSampleTSCtxt;
+                                this.PrintCommand.Execute(null); // 打印条码
+                                pairCount = 0;// 打印完成
+                            }
                         }
-                        else
+                        else // 单打和扫描
                         {
-                            this.PrintCommand.Execute(null); // 打印条码
+                            Barcode = _tempBarcode;
+                            SampleTSCtxt = _tempSampleTSCtxt;
+                            if (PrintModel == 1)
+                            {
+                                this.PrintCommand.Execute(null); // 打印条码
+                            }
                         }
                     }
                 }
@@ -226,13 +302,11 @@ namespace LabelPrint.ViewModel
         /// 显示样本信息
         /// </summary>
         /// <param name="sampleTSC"></param>
-        private void ShowSampeInfo(SampleTSC sampleTSC)
+        private string ShowSampeInfo(SampleTSC sampleTSC)
         {
-            Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-            {
-                this.SampleTSCtxt = $"患者姓名: {sampleTSC.patientName};   患者年龄: {sampleTSC.age};\r\n医院: {sampleTSC.hospitalName};\r\n地址: {sampleTSC.provinceName}/{sampleTSC.cityName}/{sampleTSC.areaName};";
-            });
+            return $"患者姓名: {sampleTSC.patientName};   患者年龄: {sampleTSC.age};\r\n医院: {sampleTSC.hospitalName};\r\n地址: {sampleTSC.provinceName}/{sampleTSC.cityName}/{sampleTSC.areaName};";
         }
+
         /// <summary>
         /// 打印二维码
         /// </summary>
@@ -247,5 +321,6 @@ namespace LabelPrint.ViewModel
             TSCLibApi.PrintLabel("1", "1");
             TSCLibApi.ClosePort(); // 关闭端口
         }
+
     }
 }

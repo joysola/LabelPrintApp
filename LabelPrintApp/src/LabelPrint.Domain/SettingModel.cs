@@ -17,11 +17,11 @@ namespace LabelPrint.Domain
         /// <summary>
         /// 起始x坐标
         /// </summary>
-        public string X { get; set; } = "115";
+        public string X { get; set; } = "110";
         /// <summary>
         /// 起始x坐标
         /// </summary>
-        public string X_Other { get; set; } = "315";
+        public string X_Other { get; set; } = "310";
         /// <summary>
         /// 起始y坐标
         /// </summary>
@@ -33,7 +33,7 @@ namespace LabelPrint.Domain
         /// <summary>
         /// 条码高度
         /// </summary>
-        public string Height { get; set; } = "55";
+        public string Height { get; set; } = "50";
         /// <summary>
         /// 条码文字对齐方式（0 无、1 左对齐、2 居中、3 右对齐）
         /// </summary>

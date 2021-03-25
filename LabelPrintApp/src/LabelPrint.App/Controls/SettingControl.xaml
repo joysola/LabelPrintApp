@@ -8,7 +8,7 @@
              xmlns:hc="https://handyorg.github.io/handycontrol"
              d:DataContext="{d:DesignInstance Type=vm:SettingVM}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="400">
+             d:DesignHeight="550" d:DesignWidth="400">
     <Grid>
         <Grid.Resources>
             <Style TargetType="StackPanel" x:Key="stpMargin">
@@ -31,9 +31,15 @@
             <StackPanel Style="{StaticResource stpMargin}">
                 <TextBlock Width="100" Text="X:" VerticalAlignment="Center"></TextBlock>
                 <hc:TextBox Text="{Binding SettingModel.X}" Width="200" VerticalContentAlignment="Center" 
-                            ShowClearButton="True" hc:InfoElement.Placeholder="请输入条码起始X轴位置"/>
+                            ShowClearButton="True" hc:InfoElement.Placeholder="请输入第一个条码起始X轴位置"/>
             </StackPanel>
-
+            
+            <StackPanel Style="{StaticResource stpMargin}">
+                <TextBlock Width="100" Text="X_Other:" VerticalAlignment="Center"></TextBlock>
+                <hc:TextBox Text="{Binding SettingModel.X_Other}" Width="200" VerticalContentAlignment="Center" 
+                            ShowClearButton="True" hc:InfoElement.Placeholder="请输入第二个条码起始X轴位置"/>
+            </StackPanel>
+            
             <StackPanel Style="{StaticResource stpMargin}">
                 <TextBlock Width="100" Text="Y:" VerticalAlignment="Center"></TextBlock>
                 <hc:TextBox Text="{Binding SettingModel.Y}" Width="200" VerticalContentAlignment="Center" 

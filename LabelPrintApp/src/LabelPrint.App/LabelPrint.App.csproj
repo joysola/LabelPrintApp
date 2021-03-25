@@ -13,10 +13,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="SettingWin.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="pictures\a4z28-xygp9-002.ico" />
     <None Remove="pictures\barcode_scan.ico" />
     <None Remove="pictures\DSTlogo.png" />
     <None Remove="pictures\setting_ico.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="SettingWin.xaml" />
   </ItemGroup>
 
   <ItemGroup>

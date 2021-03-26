@@ -47,7 +47,7 @@
                 <Button Grid.Row="0" Style="{StaticResource ButtonInfo}" Width="70" Height="30" Margin="10,0,0,0" Command="{Binding TSCVerCommand}" Content="TSC版本"></Button>
                 <StackPanel Orientation="Horizontal" Margin="30,0,0,0" HorizontalAlignment="Right">
                     <TextBlock VerticalAlignment="Center" Text="模式：" FontWeight="Bold"></TextBlock>
-                    <RadioButton GroupName="model" Content="打印" VerticalContentAlignment="Center" IsChecked="{Binding PrintModel, Converter={StaticResource PrintModel2IsCheckedConverter}, ConverterParameter=1}" />
+                    <RadioButton GroupName="model" Content="单打" VerticalContentAlignment="Center" IsChecked="{Binding PrintModel, Converter={StaticResource PrintModel2IsCheckedConverter}, ConverterParameter=1}" />
                     <RadioButton GroupName="model" Content="扫描" VerticalContentAlignment="Center" IsChecked="{Binding PrintModel, Converter={StaticResource PrintModel2IsCheckedConverter}, ConverterParameter=3}" Margin="10,0,0,0" Name="RbtnScan"/>
                     <RadioButton GroupName="model" Content="双打" VerticalContentAlignment="Center" IsChecked="{Binding PrintModel, Converter={StaticResource PrintModel2IsCheckedConverter}, ConverterParameter=2}" Margin="10,0,0,0"/>
                 </StackPanel>
